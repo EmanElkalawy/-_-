@@ -1,0 +1,89 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Task
+{
+public:
+    string title;
+    bool completed;
+    Task (const string taskTitle) : title(taskTitle), completed (false) {}
+};
+
+class TO_DO_LIST
+{
+
+
+public:
+ vector<Task> task;
+ void addTask (const string taskTitle)
+    {
+        task.emplace_back(taskTitle);
+        cout << "Added task: " << taskTitle << endl;
+    }
+
+    void markTaskasCompeleted(int id)
+    {
+        if(id>=0 && id<task.size())
+        {
+            task[id].completed=true;
+            cout << "Marked task as complete: " << task[id].title << endl;
+        } else {
+           cout << "Enter the correct task id" << endl;
+        }
+
+    }
+
+    void display()
+    {
+        cout << "To-Do List:" << endl;
+        for (size_t i = 0; i < task.size(); i++) {
+        cout <<  (task[i].completed ? "[*]" : "[ ]") << task[i].title << endl;
+        }
+
+    }
+};
+int main()
+{
+    TO_DO_LIST todo;
+    int choice;
+    string tasktitle;
+    int taskId;
+    while (choice != 4)
+        {
+        cout << "\nTo-Do List Application" << endl;
+        cout << "1. Add Task" << endl;
+        cout << "2. Mark Task Complete" << endl;
+        cout << "3. Display Tasks" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice (1-4): ";
+        cin >> choice;
+        cin.ignore();
+
+        switch (choice) {
+        case 1:
+            cout << "Enter task title: ";
+            getline(cin, tasktitle);
+            todo.addTask(tasktitle);
+            break;
+        case 2:
+            todo.display();
+            cout << "Enter the id of the task to mark as complete: ";
+            cin >> taskId;
+            todo.markTaskasCompeleted(taskId - 1);
+            break;
+        case 3:
+            todo.display();
+            break;
+        case 4:
+            cout << "Exiting the application" << endl;
+            break;
+        default:
+            cout << "Invalid choice. Please try again." << endl;
+            break;
+        }
+    }
+
+    return 0;
+}
